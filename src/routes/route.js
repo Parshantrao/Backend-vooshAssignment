@@ -15,7 +15,20 @@ router.get("/get", (req, res) => {
 
 // ==== Task APIs ====
 
+// Create a task
+router.post('/tasks', middleware.auth, taskController.createTask);
 
+// Get all tasks
+router.get('/tasks', middleware.auth, taskController.getTasks);
+
+// Update a specific task by ID
+router.put('/tasks/:taskId', middleware.auth, taskController.updateTask);
+
+// Update status of a specific task by ID
+router.put("/tasks/status/:taskId", middleware.auth, taskController.updateTaskStatus)
+
+// Delete a specific task by ID
+router.delete('/tasks/:taskId', middleware.auth, taskController.deleteTask);
 
 
 
@@ -70,14 +83,14 @@ router.get('/logout', (req, res) => {
   // Clear cookies and session storage
   res.clearCookie('token', {
     httpOnly: true,
-    secure: true, 
-    sameSite: 'None', 
+    secure: true, // Ensure secure cookies in production
+    sameSite: 'None', // Adjust based on your requirements
   
   });
   res.clearCookie('connect.sid', {
     httpOnly: true,
-    secure: true, 
-    sameSite: 'None', 
+    secure: true, // Ensure secure cookies in production
+    sameSite: 'None', // Adjust based on your requirements
    
   });
 
